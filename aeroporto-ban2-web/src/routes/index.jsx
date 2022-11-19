@@ -1,14 +1,17 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Home from "../pages/home";
+import Layout from "../components/layout";
+import Avioes from "../pages/avioes";
 import NotFound from "../pages/not_found";
 
 export default function Router() {
     return (
         <BrowserRouter>
-            <Routes>
-                <Route path="/" element={<Home />} />
-                <Route path="*" element={<NotFound />} />
-            </Routes>
+            <Layout>
+                <Routes>
+                    <Route path="/avioes" element={<Avioes />} />
+                    <Route path="*" element={<NotFound />} />
+                </Routes>
+            </Layout>
         </BrowserRouter>
     )
 } 
