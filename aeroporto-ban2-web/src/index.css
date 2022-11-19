@@ -42,6 +42,14 @@ button:active {
 	cursor: pointer;
 }
 
+.p1 {
+	padding: 1em;
+}
+
+.pt1 {
+	padding-top: 1em;
+}
+
 .p2 {
 	padding: 2em;
 }
@@ -57,6 +65,11 @@ button:active {
 .flex-row {
 	display: flex;
 	flex-direction: row;
+}
+
+.flex-column {
+	display: flex;
+	flex-direction: column;
 }
 
 .flex-center {
@@ -81,6 +94,7 @@ button:active {
 .side-menu-link {
 	text-decoration: underline;
 	font-weight: normal;
+    font-style: italic;
 }
 
 .side-menu-link::before {

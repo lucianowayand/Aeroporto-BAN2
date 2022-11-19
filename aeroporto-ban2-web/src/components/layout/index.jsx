@@ -8,12 +8,15 @@ export default function Layout({ children }) {
             {/* Side menu */}
             <div className="full-height side-menu">
                 <h2 className="pt2 pointer" onClick={() => navigate('/')}>Airport Manager</h2>
-                <div className="pt2">
-                    <a className="side-menu-link pointer" onClick={() => navigate('/avioes')}>Aviões</a>
+                <div className="pt2 flex-column">
+                    <a className="side-menu-link pointer pt2" onClick={() => navigate('/avioes')}>Aviões</a>
+                    <a className="side-menu-link pointer pt1" onClick={() => navigate('/empregados')}>Empregados</a>
+                    <a className="side-menu-link pointer pt1" onClick={() => navigate('/modelos')}>Modelos</a>
+                    <a className="side-menu-link pointer pt1" onClick={() => navigate('/testes')}>Testes</a>
                 </div>
             </div>
             {/* Content */}
-            <div className="content">
+            <div className="content p2">
                 {children}
             </div>
         </div>
