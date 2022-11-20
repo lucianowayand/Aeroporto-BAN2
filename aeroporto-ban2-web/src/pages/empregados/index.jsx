@@ -67,6 +67,7 @@ export default function Empregados() {
             nro_sindicato: nro_sindicatoUpdate.current,
             tecnico: tecnicoUpdate
         }
+        console.log(payload)
         const res = await Update('empregado', selectedEmpregado.nro_matricula, payload)
         if (res.status === 200) {
             setMessage({
@@ -127,6 +128,7 @@ export default function Empregados() {
                             <input
                                 className="mt0-5 modal-textfield"
                                 defaultValue={(selectedEmpregado ? selectedEmpregado.nro_matricula : "")}
+                                onChange={(event) => nro_matriculaUpdate.current = parseInt(event.target.value)}
                             />
                         </div>
                         <div className="pt2 pr1">
@@ -134,6 +136,8 @@ export default function Empregados() {
                             <input
                                 className="mt0-5 modal-textfield"
                                 defaultValue={(selectedEmpregado ? selectedEmpregado.telefone : "")}
+                                onChange={(event) => telefoneUpdate.current = parseInt(event.target.value)}
+
                             />
                         </div>
                         <div className="pt2 pr1">
@@ -141,6 +145,8 @@ export default function Empregados() {
                             <input
                                 className="mt0-5 modal-textfield"
                                 defaultValue={(selectedEmpregado ? selectedEmpregado.nro_sindicato : "")}
+                                onChange={(event) => nro_sindicatoUpdate.current = parseInt(event.target.value)}
+
                             />
                         </div>
                     </div>
@@ -150,6 +156,8 @@ export default function Empregados() {
                             <input
                                 className="mt0-5 modal-textfield"
                                 defaultValue={(selectedEmpregado ? selectedEmpregado.endereco : "")}
+                                onChange={(event) => enderecoUpdate.current = parseInt(event.target.value)}
+
                             />
                         </div>
                         <div className="pt2 pr1">
@@ -157,6 +165,8 @@ export default function Empregados() {
                             <input
                                 className="mt0-5 modal-textfield"
                                 defaultValue={(selectedEmpregado ? selectedEmpregado.salario : "")}
+                                onChange={(event) => salarioUpdate.current = parseInt(event.target.value)}
+
                             />
                         </div>
                         <div className="pt2 pr1">
