@@ -22,8 +22,8 @@ model controladoraereo {
 
 model empregado {
   nro_matricula      Int                  @id
-  endereco           String[]             @db.VarChar
-  telefone           String[]             @db.VarChar
+  endereco           String
+  telefone           String
   salario            Float
   nro_sindicato      Int
   tecnico            Boolean              @default(false)
@@ -63,8 +63,8 @@ model testa {
 }
 
 model teste {
-  nro_anac Int      @id
-  nome     String[] @db.VarChar
+  nro_anac Int     @id
+  nome     String
   pont_max Int
   testa    testa[]
 }
