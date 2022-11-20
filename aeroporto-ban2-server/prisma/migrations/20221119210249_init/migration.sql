@@ -103,7 +103,7 @@ $$
 declare modelo int;
 declare modeloTecnico int;
 begin
-   Select count(codigo_modelo) into modelo from testa T join aviao A on A.num_reg = T.num_reg join modelo_has_tecnico M on nro_matricula=nro_tecnico where M.codigo_modelo=A.codigo_modelo;
+   Select count(A.codigo_modelo) into modelo from testa T join aviao A on A.num_reg = T.num_reg join modelo_has_tecnico M on nro_matricula=nro_tecnico where M.codigo_modelo=A.codigo_modelo;
    if modeloTecnico<1 then
       raise exception 'Técnico não é perito nesse avião';
    end if;
