@@ -104,12 +104,12 @@ export default function Empregados() {
 
     const SelectEmpregado = (value) => {
         setSelectedEmpregado(value)
-            nro_matriculaUpdate.current = value.nro_matricula
-            enderecoUpdate.current = value.endereco
-            telefoneUpdate.current = value.telefone
-            salarioUpdate.current = value.salario
-            nro_sindicatoUpdate.current = value.nro_sindicato
-            tecnicoUpdate.current = value.tecnico
+        nro_matriculaUpdate.current = value.nro_matricula
+        enderecoUpdate.current = value.endereco
+        telefoneUpdate.current = value.telefone
+        salarioUpdate.current = value.salario
+        nro_sindicatoUpdate.current = value.nro_sindicato
+        setTecnicoUpdate(value.tecnico)
         setModal(true)
     }
 
@@ -120,21 +120,52 @@ export default function Empregados() {
     return (
         <div>
             <Modal modal={modal} closeModal={() => setModal(false)} updateFunction={UpdateEmpregados} deleteFunction={DeleteEmpregados}>
-                <div className="pt2 pr1">
-                    <h5>Matrícula</h5>
-                    <input
-                        className="mt0-5 modal-textfield disabled-field"
-                        defaultValue={(selectedEmpregado ? selectedEmpregado.nro_matricula : "")}
-                        disabled
-                    />
-                </div>
-                <div className="pt2 pr1">
-                    <h5>Endereço</h5>
-                    <input
-                        className="mt0-5 modal-textfield"
-                        onChange={(event) => enderecoUpdate.current = event.target.value}
-                        defaultValue={(selectedEmpregado ? selectedEmpregado.endereco : "")}
-                    />
+                <div className="flex-row-space-around">
+                    <div>
+                        <div className="pt2 pr1">
+                            <h5>Matrícula</h5>
+                            <input
+                                className="mt0-5 modal-textfield"
+                                defaultValue={(selectedEmpregado ? selectedEmpregado.nro_matricula : "")}
+                            />
+                        </div>
+                        <div className="pt2 pr1">
+                            <h5>Telefone</h5>
+                            <input
+                                className="mt0-5 modal-textfield"
+                                defaultValue={(selectedEmpregado ? selectedEmpregado.telefone : "")}
+                            />
+                        </div>
+                        <div className="pt2 pr1">
+                            <h5>Nr. Sindicato</h5>
+                            <input
+                                className="mt0-5 modal-textfield"
+                                defaultValue={(selectedEmpregado ? selectedEmpregado.nro_sindicato : "")}
+                            />
+                        </div>
+                    </div>
+                    <div>
+                        <div className="pt2 pr1">
+                            <h5>Endereço</h5>
+                            <input
+                                className="mt0-5 modal-textfield"
+                                defaultValue={(selectedEmpregado ? selectedEmpregado.endereco : "")}
+                            />
+                        </div>
+                        <div className="pt2 pr1">
+                            <h5>Salário</h5>
+                            <input
+                                className="mt0-5 modal-textfield"
+                                defaultValue={(selectedEmpregado ? selectedEmpregado.salario : "")}
+                            />
+                        </div>
+                        <div className="pt2 pr1">
+                            <div className="ml1 flex-column-center border register-checkbox">
+                                <input type="checkbox" name="tecnico" defaultChecked={tecnicoUpdate} onClick={() => setTecnicoUpdate(!tecnicoUpdate)} />
+                                <label for="tecnico" className="pl0-5">Técnico</label>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </Modal>
             <h1>Empregados</h1>
@@ -164,7 +195,7 @@ export default function Empregados() {
                             <input className="mt0-5 new-textfield register-field" onChange={(event) => nro_sindicatoCreate.current = parseInt(event.target.value)} />
                         </div>
                         <div className="ml1 flex-column-center border register-checkbox">
-                            <input type="checkbox" name="tecnico" checked={tecnicoCreate} onClick={() => setTecnicoCreate(!tecnicoCreate)} />
+                            <input type="checkbox" name="tecnico" defaultChecked={tecnicoCreate} onClick={() => setTecnicoCreate(!tecnicoCreate)} />
                             <label for="tecnico" className="pl0-5">Técnico</label>
                         </div>
                     </div>

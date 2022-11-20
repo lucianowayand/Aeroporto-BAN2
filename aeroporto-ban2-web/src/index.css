@@ -185,6 +185,12 @@ button:active {
     justify-content: space-between;
 	align-items: center;
 }
+.flex-row-space-around {
+	display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+	align-items: center;
+}
 
 .border {
 	border: #000 2px solid;
