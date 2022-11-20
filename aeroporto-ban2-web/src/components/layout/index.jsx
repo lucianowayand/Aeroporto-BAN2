@@ -6,7 +6,7 @@ export default function Layout({ children }) {
     return (
         <div className="full-height flex-row">
             {/* Side menu */}
-            <div className="full-height side-menu flex-column-space-between">
+            <div className="full-height side-menu flex-column-space-between pr1">
                 <div>
                     <h2 className="pt2 pointer" onClick={() => navigate('/')}>Airport Manager</h2>
                     <div className="pt2 flex-column">
