@@ -1,9 +1,17 @@
 const express = require("express");
 const router = express.Router();
 
-const { getAll, register, update, del } = require("../controllers/empregado");
+const {
+  getAll,
+  getAllTecnicos,
+  register,
+  update,
+  del,
+} = require("../controllers/empregado");
 
 router.get("/", getAll);
+
+router.get("/tecnico", getAllTecnicos);
 
 router.post("/", register);
 

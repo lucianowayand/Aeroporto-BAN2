@@ -10,6 +10,16 @@ const GetAll = async () => {
   }
 };
 
+const GetAllTecnicos = async () => {
+  try {
+    const empregado =
+      await prisma.$queryRaw`SELECT * FROM empregado where tecnico`;
+    return empregado;
+  } catch (e) {
+    throw new Error("Erro ao retornar empregado. " + e);
+  }
+};
+
 const Create = async (body) => {
   try {
     const empregado = await prisma.$queryRaw`Insert into empregado values (
@@ -38,7 +48,8 @@ const Update = async (body, id) => {
   } catch (e) {
     if (
       e instanceof Prisma.PrismaClientKnownRequestError &&
-      e.code == "P2010" && e.meta.code == "P0001"
+      e.code == "P2010" &&
+      e.meta.code == "P0001"
     ) {
       // Exemplo de msg: 'db error: ERROR: Empregado não é técnico'
       throw new Error(e.meta.message.split(": ")[2]);
@@ -46,7 +57,8 @@ const Update = async (body, id) => {
 
     if (
       e instanceof Prisma.PrismaClientKnownRequestError &&
-      e.code == "P2010" && e.meta.code == "23505"
+      e.code == "P2010" &&
+      e.meta.code == "23505"
     ) {
       // Exemplo de msg: 'db error: ERROR: Empregado não é técnico'
       throw new Error("Registro já existe.");
@@ -65,4 +77,4 @@ const Delete = async (id) => {
   }
 };
 
-module.exports = { GetAll, Create, Update, Delete };
+module.exports = { GetAll, GetAllTecnicos, Create, Update, Delete };
