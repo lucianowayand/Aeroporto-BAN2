@@ -23,7 +23,7 @@ const Update = async (body, id) => {
   try {
     const teste = await prisma.$queryRaw`Update teste set 
     nro_anac = ${parseInt(body.nro_anac)}, 
-    nome = '${body.nome}', 
+    nome = ${body.nome}, 
     pont_max = ${parseInt(body.pont_max)} 
     where nro_anac = ${parseInt(id)}`;
   } catch (e) {
