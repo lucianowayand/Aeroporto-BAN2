@@ -145,12 +145,12 @@ export default function Avioes() {
                         <div className="ml1">
                             <h5>Código do Modelo</h5>
                             {modelos.length !== 0 ?
-                                <select className="mt0-5 new-textfield" onChange={(event) => nro_matriculaCreate(parseInt(event.target.value))}>
+                                <select className="mt0-5 new-textfield" onChange={(event) => codigo_modeloCreate.current = event.target.value}>
                                     {modelos.map((element, i) => (
                                         <option key={i} value={element.codigo}>{element.codigo}</option>
                                     ))}
                                 </select>
-                                : <input className="mt0-5 new-textfield  disabled-field" disabled onChange={(event) => data_exameCreate.current = event.target.value} />
+                                : <input className="mt0-5 new-textfield  disabled-field" disabled />
                             }
                         </div>
                     </div>
