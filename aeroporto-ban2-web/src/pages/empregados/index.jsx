@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react"
+import { Create, Delete, GetAll, Update } from "../../services/api"
 import Modal from "../../components/modal"
 import Warning from "../../components/warning"
-import { CreateEmpregados, DeleteEmpregados, GetAllEmpregados } from "../../services/empregados"
 
 export default function Empregados() {
     const [empregados, setEmpregados] = useState([])
@@ -28,12 +28,12 @@ export default function Empregados() {
     const [modal, setModal] = useState(false)
     const [selectedEmpregado, setSelectedEmpregado] = useState()
 
-    const GetAll = async () => {
-        const res = await GetAllEmpregados()
+    const GetAllEmpregados = async () => {
+        const res = await GetAll('empregado')
         setEmpregados(res.data.empregados)
     }
 
-    const Create = async () => {
+    const CreateEmpregados = async () => {
         const payload = {
             nro_matricula: nro_matriculaCreate.current,
             endereco: enderecoCreate.current,
@@ -43,13 +43,13 @@ export default function Empregados() {
             tecnico: tecnicoCreate
         }
         console.log(payload)
-        const res = await CreateEmpregados(payload)
+        const res = await Create('empregado', payload)
         if (res.status === 200) {
             setMessage({
                 text: "Empregado cadastrado com sucesso!",
                 error: false
             })
-            GetAll()
+            GetAllEmpregados()
         } else {
             setMessage({
                 text: res.data.message,
@@ -58,7 +58,7 @@ export default function Empregados() {
         }
     }
 
-    const Update = async () => {
+    const UpdateEmpregados = async () => {
         let payload = {
             nro_matricula: nro_matriculaUpdate.current,
             endereco: enderecoUpdate.current,
@@ -67,13 +67,13 @@ export default function Empregados() {
             nro_sindicato: nro_sindicatoUpdate.current,
             tecnico: tecnicoUpdate
         }
-        const res = await UpdateAvioes(selectedEmpregado.nro_matricula, payload)
+        const res = await Update('empregado', selectedEmpregado.nro_matricula, payload)
         if (res.status === 200) {
             setMessage({
                 text: "Empregado atualizado com sucesso!",
                 error: false
             })
-            GetAll()
+            GetAllEmpregados()
         } else {
             console.log(res)
             setMessage({
@@ -84,14 +84,14 @@ export default function Empregados() {
         setModal(false)
     }
 
-    const Delete = async () => {
-        const res = await DeleteEmpregados(selectedEmpregado.nro_matricula)
+    const DeleteEmpregados = async () => {
+        const res = await Delete('empregado', selectedEmpregado.nro_matricula)
         if (res.status === 200) {
             setMessage({
                 text: "Empregado deletado com sucesso!",
                 error: false
             })
-            GetAll()
+            GetAllEmpregados()
         } else {
             console.log(res)
             setMessage({
@@ -114,12 +114,12 @@ export default function Empregados() {
     }
 
     useEffect(() => {
-        GetAll()
+        GetAllEmpregados()
     }, [])
 
     return (
         <div>
-            <Modal modal={modal} closeModal={() => setModal(false)} updateFunction={Update} deleteFunction={Delete}>
+            <Modal modal={modal} closeModal={() => setModal(false)} updateFunction={UpdateEmpregados} deleteFunction={DeleteEmpregados}>
                 <div className="pt2 pr1">
                     <h5>Matrícula</h5>
                     <input
@@ -169,7 +169,7 @@ export default function Empregados() {
                         </div>
                     </div>
                     <div className="pl2">
-                        <button onClick={Create}>Enviar</button>
+                        <button onClick={CreateEmpregados}>Enviar</button>
                     </div>
                 </div>
             </div>

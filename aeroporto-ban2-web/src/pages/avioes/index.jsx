@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react"
+import { Create, Delete, GetAll, Update } from "../../services/api"
 import Modal from "../../components/modal"
 import Warning from "../../components/warning"
-import { Create, Delete, GetAll, Update } from "../../services/api"
 
 export default function Avioes() {
     const [avioes, setAvioes] = useState([])
@@ -33,7 +33,7 @@ export default function Avioes() {
                 text: "Avião cadastrado com sucesso!",
                 error: false
             })
-            GetAll()
+            GetAllAvioes()
         } else {
             setMessage({
                 text: res.data.message,
@@ -53,7 +53,7 @@ export default function Avioes() {
                 text: "Avião atualizado com sucesso!",
                 error: false
             })
-            GetAll()
+            GetAllAvioes()
         } else {
             console.log(res)
             setMessage({
@@ -129,7 +129,7 @@ export default function Avioes() {
                         </div>
                     </div>
                     <div className="pl2">
-                        <button onClick={Create}>Enviar</button>
+                        <button onClick={CreateAvioes}>Enviar</button>
                     </div>
                 </div>
             </div>

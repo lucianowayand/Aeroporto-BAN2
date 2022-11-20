@@ -22,7 +22,7 @@ export default function Modelos() {
     const [selectedModelo, setSelectedModelo] = useState()
 
     const GetAllModelos = async () => {
-        const res = await GetAllModelos()
+        const res = await GetAllModelos('modelo')
         setModelos(res.data.modelos)
     }
 
@@ -101,7 +101,7 @@ export default function Modelos() {
 
     return (
         <div>
-            <Modal modal={modal} closeModal={() => setModal(false)} updateFunction={UpdateModelos} deleteFunction={DeleteModelos}>
+            <Modal modal={modal} closeModal={() => setModal(false)} updateFunction={UpdateModelo} deleteFunction={DeleteModelos}>
                 <div className="pt2 pr1">
                     <h5>Código</h5>
                     <input
@@ -147,7 +147,7 @@ export default function Modelos() {
                         </div>
                     </div>
                     <div className="pl2">
-                        <button onClick={CreateModelos}>Enviar</button>
+                        <button onClick={CreateModelo}>Enviar</button>
                     </div>
                 </div>
             </div>
