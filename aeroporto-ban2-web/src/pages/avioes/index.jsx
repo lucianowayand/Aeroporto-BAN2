@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react"
 import Modal from "../../components/modal"
 import Warning from "../../components/warning"
-import { CreateAvioes, DeleteAvioes, GetAllAvioes, UpdateAvioes } from "../../services/avioes"
+import { Create, Delete, GetAll, Update } from "../../services/avioes"
 
 export default function Avioes() {
     const [avioes, setAvioes] = useState([])
@@ -18,13 +18,13 @@ export default function Avioes() {
     const [modal, setModal] = useState(false)
     const [selectedAviao, setSelectedAviao] = useState()
 
-    const GetAll = async () => {
-        const res = await GetAllAvioes()
+    const GetAllAvioes = async () => {
+        const res = await GetAll('aviao')
         setAvioes(res.data.avioes)
     }
 
-    const Create = async () => {
-        const res = await CreateAvioes({
+    const CreateAvioes = async () => {
+        const res = await Create('aviao', {
             num_reg: num_regCreate.current,
             codigo_modelo: codigo_modeloCreate.current
         })
@@ -42,12 +42,12 @@ export default function Avioes() {
         }
     }
 
-    const Update = async () => {
+    const UpdateAvioes = async () => {
         let payload = {
             num_reg: num_regUpdate.current,
             codigo_modelo: selectedAviao.codigo_modelo
         }
-        const res = await UpdateAvioes(selectedAviao.num_reg, payload)
+        const res = await Update('aviao', selectedAviao.num_reg, payload)
         if (res.status === 200) {
             setMessage({
                 text: "Avião atualizado com sucesso!",
@@ -64,8 +64,8 @@ export default function Avioes() {
         setModal(false)
     }
 
-    const Delete = async () => {
-        const res = await DeleteAvioes(selectedAviao.num_reg)
+    const DeleteAvioes = async () => {
+        const res = await Delete('aviao', selectedAviao.num_reg)
         if (res.status === 200) {
             setMessage({
                 text: "Avião deletado com sucesso!",
@@ -90,12 +90,12 @@ export default function Avioes() {
     }
 
     useEffect(() => {
-        GetAll()
+        GetAllAvioes()
     }, [])
 
     return (
         <div>
-            <Modal modal={modal} closeModal={() => setModal(false)} updateFunction={Update} deleteFunction={Delete}>
+            <Modal modal={modal} closeModal={() => setModal(false)} updateFunction={UpdateAvioes} deleteFunction={DeleteAvioes}>
                 <div className="pt2 pr1">
                     <h5>Código</h5>
                     <input
