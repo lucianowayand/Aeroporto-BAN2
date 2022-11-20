@@ -45,11 +45,11 @@ export default function Controlador() {
 
     const UpdateControlador = async () => {
         let payload = {
-            codigo: codigoUpdate.current,
-            capacidade: capacidadeUpdate.current,
-            peso: pesoUpdate.current
+            nro_matricula: selectedControlador.nro_matricula,
+            data_exame: data_exameUpdate.current,
         }
-        const res = await Update('controlador', selectedControlador.codigo, payload)
+        console.log(payload)
+        const res = await Update('controlador', selectedControlador.nro_matricula, payload)
         if (res.status === 200) {
             setMessage({
                 text: "Controlador atualizado com sucesso!",
@@ -67,7 +67,7 @@ export default function Controlador() {
     }
 
     const DeleteControlador = async () => {
-        const res = await Delete('controlador', selectedControlador.codigo)
+        const res = await Delete('controlador', selectedControlador.nro_matricula)
         if (res.status === 200) {
             setMessage({
                 text: "Controlador deletado com sucesso!",
@@ -86,9 +86,8 @@ export default function Controlador() {
 
     const SelectControlador = (value) => {
         setSelectedControlador(value)
-        codigoUpdate.current = value.codigo
-        capacidadeUpdate.current = value.capacidade
-        pesoUpdate.current = value.peso
+        nro_matriculaUpdate.current = value.codigo
+        data_exameUpdate.current = value.capacidade
         setModal(true)
     }
 
@@ -100,19 +99,19 @@ export default function Controlador() {
         <div>
             <Modal modal={modal} closeModal={() => setModal(false)} updateFunction={UpdateControlador} deleteFunction={DeleteControlador}>
                 <div className="pt2 pr1">
-                    <h5>Código</h5>
+                    <h5>Número de Matrícula</h5>
                     <input
-                        className="mt0-5 modal-textfield"
-                        onChange={(event) => codigoUpdate.current = event.target.value}
-                        defaultValue={(selectedControlador ? selectedControlador.codigo : "")}
+                        className="mt0-5 modal-textfield disabled-field"
+                        defaultValue={(selectedControlador ? selectedControlador.nro_matricula : "")}
+                        disabled
                     />
                 </div>
                 <div className="pt2 pr1">
-                    <h5>Capacidade</h5>
+                    <h5>Data de Exame</h5>
                     <input
                         className="mt0-5 modal-textfield"
-                        onChange={(event) => capacidadeUpdate.current = event.target.value}
-                        defaultValue={(selectedControlador ? selectedControlador.capacidade : "")}
+                        onChange={(event) => data_exameUpdate.current = event.target.value}
+                        defaultValue={(selectedControlador ? selectedControlador.data_exame.slice(0,10) : "")}
                     />
                 </div>
             </Modal>
