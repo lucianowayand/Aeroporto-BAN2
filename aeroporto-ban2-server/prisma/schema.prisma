@@ -16,7 +16,7 @@ model aviao {
 
 model controladoraereo {
   nro_matricula Int       @id
-  data_exame    DateTime  @db.Date
+  data_exame    DateTime
   empregado     empregado @relation(fields: [nro_matricula], references: [nro_matricula], map: "controlador_matricula_fkey")
 }
 
@@ -51,7 +51,7 @@ model modelo_has_tecnico {
 
 model testa {
   codigo      Int       @id
-  data        DateTime  @db.Date
+  data        DateTime
   tempo       DateTime  @db.Time(6)
   pontuacao   Int
   nro_anac    Int
