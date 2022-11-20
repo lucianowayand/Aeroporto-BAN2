@@ -25,7 +25,7 @@ const Update = async (body, id) => {
     codigo = ${body.codigo}, 
     capacidade = ${parseInt(body.capacidade)}, 
     peso = ${parseInt(body.peso)} 
-    where codigo = id`;
+    where codigo = ${id}`;
   } catch (e) {
     throw new Error("Erro ao atualizar modelo. " + e);
   }
