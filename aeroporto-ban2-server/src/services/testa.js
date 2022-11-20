@@ -15,6 +15,13 @@ const Create = async (body) => {
     const teste =
       await prisma.$queryRaw`Insert into testa values (${body.codigo}, ${body.data}::timestamp, ${body.tempo}, ${body.pontuacao}, ${body.nro_anac}, ${body.num_reg}, ${body.nro_tecnico})`;
   } catch (e) {
+    if (
+      e instanceof Prisma.PrismaClientKnownRequestError &&
+      e.code == "P2010" && e.meta.code == "23505"
+    ) {
+      // Exemplo de msg: 'db error: ERROR: Empregado não é técnico'
+      throw new Error("Registro já existe");
+    }
     throw new Error("Erro ao registrar registro de teste. " + e);
   }
 };

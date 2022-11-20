@@ -22,6 +22,13 @@ const Create = async (body) => {
     ) {
       throw new Error("Erro ao registrar avião. Código de modelo inválido" + e);
     }
+    if (
+      e instanceof Prisma.PrismaClientKnownRequestError &&
+      e.code == "P2010" && e.meta.code == "23505"
+    ) {
+      // Exemplo de msg: 'db error: ERROR: Empregado não é técnico'
+      throw new Error("Registro já existe");
+    }
     throw new Error("Erro ao registrar avião. " + e);
   }
 };
