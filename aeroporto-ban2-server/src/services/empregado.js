@@ -36,6 +36,13 @@ const Update = async (body, id) => {
       where nro_matricula = ${parseInt(id)}
       `;
   } catch (e) {
+    if (
+      e instanceof Prisma.PrismaClientKnownRequestError &&
+      e.code == "P2010" && e.meta.code == "P0001"
+    ) {
+      // Exemplo de msg: 'db error: ERROR: Empregado não é técnico'
+      throw new Error(e.meta.message.split(": ")[2]);
+    }
     throw new Error("Erro ao atualizar empregado. " + e);
   }
 };

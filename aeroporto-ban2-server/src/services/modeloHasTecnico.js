@@ -17,10 +17,17 @@ const Create = async (body) => {
   } catch (e) {
     if (
       e instanceof Prisma.PrismaClientKnownRequestError &&
-      e.code == "P2010"
+      e.code == "P2010" && e.meta.code == "P0001"
     ) {
       // Exemplo de msg: 'db error: ERROR: Empregado não é técnico'
       throw new Error(e.meta.message.split(": ")[2]);
+    }
+    if (
+      e instanceof Prisma.PrismaClientKnownRequestError &&
+      e.code == "P2010" && e.meta.code == "23505"
+    ) {
+      // Exemplo de msg: 'db error: ERROR: Empregado não é técnico'
+      throw new Error("Registro já existe");
     }
     throw new Error("Erro ao registrar perícia. " + e);
   }
@@ -30,12 +37,12 @@ const Update = async (body, id) => {
   try {
     const modelo = await prisma.$queryRaw`Update modelo_has_tecnico set 
     nro_matricula = ${parseInt(body.nro_matricula)}, 
-    codigo_modelo = ${parseInt(body.codigo_modelo)}
+    codigo_modelo = ${body.codigo_modelo}
     where nro_matricula = ${parseInt(id)}`;
   } catch (e) {
     if (
       e instanceof Prisma.PrismaClientKnownRequestError &&
-      e.code == "P2010"
+      e.code == "P2010" && e.meta.code == "P0001"
     ) {
       // Exemplo de msg: 'db error: ERROR: Empregado não é técnico'
       throw new Error(e.meta.message.split(": ")[2]);
