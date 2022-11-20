@@ -4,58 +4,42 @@ const prisma = new PrismaClient();
 
 const GetAll = async () => {
   try {
-    const avioes = await prisma.aviao.findMany();
+    const avioes = await prisma.$queryRaw`SELECT * FROM aviao`;
     return avioes;
   } catch (e) {
-    throw new Error("Erro ao retornar aviões");
+    throw new Error("Erro ao retornar aviões", e);
   }
 };
 
 const Create = async (body) => {
   try {
-    const aviao = await prisma.aviao.create({
-      data: {
-        num_reg: body.num_reg,
-        codigo_modelo: body.codigo_modelo,
-      },
-    });
+    const aviao =
+      await prisma.$queryRaw`Insert into aviao values (${body.num_reg}, ${body.codigo_modelo})`;
   } catch (e) {
     if (
       e instanceof Prisma.PrismaClientKnownRequestError &&
-      e.code == "P2003"
+      (e.code == "P2003" || e.code == "P2010")
     ) {
-      throw new Error("Erro ao registrar avião. Código de modelo inválido");
+      throw new Error("Erro ao registrar avião. Código de modelo inválido", e);
     }
-    throw new Error("Erro ao registrar avião");
+    throw new Error("Erro ao registrar avião", e);
   }
 };
 
 const Update = async (body, id) => {
   try {
-    const aviao = await prisma.aviao.update({
-      data: {
-        num_reg: body.num_reg,
-        codigo_modelo: body.codigo_modelo,
-        modeloId: body.modeloId,
-      },
-      where: {
-        id,
-      },
-    });
+    const aviao =
+      await prisma.$queryRaw`Update into aviao (num_reg, codigo_modelo) values (${body.num_reg}, ${body.codigo_modelo}) where num_reg = ${id}`;
   } catch (e) {
-    throw new Error("Erro ao atualizar avião");
+    throw new Error("Erro ao atualizar avião", e);
   }
 };
 
 const Delete = async (id) => {
   try {
-    const aviao = await prisma.aviao.delete({
-      where: {
-        id,
-      },
-    });
+    await prisma.$queryRaw`Delete aviao where num_reg = ${id}`;
   } catch (e) {
-    throw new Error("Erro ao deletar avião");
+    throw new Error("Erro ao deletar avião", e);
   }
 };
 
