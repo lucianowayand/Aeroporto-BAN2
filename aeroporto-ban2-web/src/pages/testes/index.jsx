@@ -10,23 +10,26 @@ export default function Testes() {
     error: false,
   });
 
-  const codigo_modeloCreate = useRef("");
-  const num_regCreate = useRef(0);
-  const codigo_modeloUpdate = useRef("");
-  const num_regUpdate = useRef(0);
+  const nro_anacCreate = useRef(0);
+  const nomeCreate = useRef("");
+  const pont_maxCreate = useRef(0);
+  const nro_anacUpdate = useRef(0);
+  const nomeUpdate = useRef("");
+  const pont_maxUpdate = useRef(0);
 
   const [modal, setModal] = useState(false);
   const [selectedTeste, setSelectedTeste] = useState();
 
   const GetAllTestes = async () => {
-    const res = await GetAll();
+    const res = await GetAll("teste");
     setTestes(res.data.testes);
   };
 
   const CreateTeste = async () => {
-    const res = await Create({
-      num_reg: num_regCreate.current,
-      codigo_modelo: codigo_modeloCreate.current,
+    const res = await Create("teste", {
+      nome: nomeCreate.current,
+      nro_anac: nro_anacCreate.current,
+      pont_max: pont_maxCreate.current,
     });
     if (res.status === 200) {
       setMessage({
@@ -44,10 +47,12 @@ export default function Testes() {
 
   const UpdateTestes = async () => {
     let payload = {
-      num_reg: num_regUpdate.current,
-      codigo_modelo: selectedTeste.codigo_modelo,
+      nome: nomeUpdate.current,
+      nro_anac: nro_anacUpdate.current,
+      pont_max: pont_maxUpdate.current,
     };
-    const res = await Update(selectedTeste.num_reg, payload);
+    console.log(payload);
+    const res = await Update("teste", selectedTeste.nro_anac, payload);
     if (res.status === 200) {
       setMessage({
         text: "Teste atualizado com sucesso!",
@@ -65,7 +70,7 @@ export default function Testes() {
   };
 
   const DeleteTestes = async () => {
-    const res = await Delete(selectedTeste.num_reg);
+    const res = await Delete("teste", selectedTeste.nro_anac);
     if (res.status === 200) {
       setMessage({
         text: "Teste deletado com sucesso!",
@@ -84,13 +89,14 @@ export default function Testes() {
 
   const SelectTeste = (value) => {
     setSelectedTeste(value);
-    codigo_modeloUpdate.current = value.codigo_modelo;
-    num_regUpdate.current = value.num_reg;
+    nro_anacUpdate.current = value.nro_anac;
+    nomeUpdate.current = value.nome;
+    pont_maxUpdate.current = value.pont_max;
     setModal(true);
   };
 
   useEffect(() => {
-    GetAll();
+    GetAllTestes();
   }, []);
 
   return (
@@ -102,21 +108,29 @@ export default function Testes() {
         deleteFunction={DeleteTestes}
       >
         <div className="pt2 pr1">
-          <h5>Código</h5>
+          <h5>Número Anac</h5>
           <input
             className="mt0-5 modal-textfield disabled-field"
-            defaultValue={selectedTeste ? selectedTeste.codigo_modelo : ""}
+            defaultValue={selectedTeste ? selectedTeste.nro_anac : 0}
             disabled
           />
         </div>
         <div className="pt2 pr1">
-          <h5>Número de Registro</h5>
+          <h5>Nome</h5>
+          <input
+            className="mt0-5 modal-textfield"
+            onChange={(event) => (nomeUpdate.current = event.target.value)}
+            defaultValue={selectedTeste ? selectedTeste.nome : ""}
+          />
+        </div>
+        <div className="pt2 pr1">
+          <h5>Pontuação Máxima</h5>
           <input
             className="mt0-5 modal-textfield"
             onChange={(event) =>
-              (num_regUpdate.current = parseInt(event.target.value))
+              (pont_maxUpdate.current = parseInt(event.target.value))
             }
-            defaultValue={selectedTeste ? selectedTeste.num_reg : ""}
+            defaultValue={selectedTeste ? selectedTeste.pont_max : 0}
           />
         </div>
       </Modal>
@@ -127,20 +141,27 @@ export default function Testes() {
         <div className="pt1 flex-row-space-between">
           <div className="flex-row">
             <div>
-              <h5>Código</h5>
+              <h5>Número Anac</h5>
               <input
                 className="mt0-5 new-textfield"
                 onChange={(event) =>
-                  (codigo_modeloCreate.current = event.target.value)
+                  (nro_anacCreate.current = parseInt(event.target.value))
                 }
               />
             </div>
             <div className="ml1">
-              <h5>Número de Registro</h5>
+              <h5>Nome</h5>
+              <input
+                className="mt0-5 new-textfield"
+                onChange={(event) => (nomeCreate.current = event.target.value)}
+              />
+            </div>
+            <div className="ml1">
+              <h5>Pontuação Máxima</h5>
               <input
                 className="mt0-5 new-textfield"
                 onChange={(event) =>
-                  (num_regCreate.current = parseInt(event.target.value))
+                  (pont_maxCreate.current = parseInt(event.target.value))
                 }
               />
             </div>
@@ -154,8 +175,9 @@ export default function Testes() {
         <table>
           <thead>
             <tr>
-              <th>Código</th>
-              <th>Número de Registro</th>
+              <th>Número Anac</th>
+              <th>Nome</th>
+              <th>Pontuação máxima</th>
             </tr>
           </thead>
           <tbody>
@@ -166,8 +188,9 @@ export default function Testes() {
                   onClick={() => SelectTeste(value)}
                   className="table-row pointer"
                 >
-                  <td>{value.codigo_modelo}</td>
-                  <td>{value.num_reg}</td>
+                  <td>{value.nro_anac}</td>
+                  <td>{value.nome}</td>
+                  <td>{value.pont_max}</td>
                 </tr>
               ))
             ) : (
