@@ -7,7 +7,7 @@ const GetAll = async () => {
     const avioes = await prisma.$queryRaw`SELECT * FROM aviao`;
     return avioes;
   } catch (e) {
-    throw new Error("Erro ao retornar aviões" + e);
+    throw new Error("Erro ao retornar aviões. " + e);
   }
 };
 
@@ -22,7 +22,7 @@ const Create = async (body) => {
     ) {
       throw new Error("Erro ao registrar avião. Código de modelo inválido" + e);
     }
-    throw new Error("Erro ao registrar avião" + e);
+    throw new Error("Erro ao registrar avião. " + e);
   }
 };
 
@@ -34,7 +34,7 @@ const Update = async (body, id) => {
     codigo_modelo = ${parseInt(body.codigo_modelo)}
     where num_reg = ${parseInt(id)}`;
   } catch (e) {
-    throw new Error("Erro ao atualizar avião" + e);
+    throw new Error("Erro ao atualizar avião. " + e);
   }
 };
 
@@ -42,7 +42,7 @@ const Delete = async (id) => {
   try {
     await prisma.$queryRaw`Delete from aviao where num_reg = ${parseInt(id)}`;
   } catch (e) {
-    throw new Error("Erro ao deletar avião" + e);
+    throw new Error("Erro ao deletar avião. " + e);
   }
 };
 
