@@ -12,11 +12,8 @@ const GetAll = async () => {
 
 const Create = async (body) => {
   try {
-    console.log(
-      `Insert into teste values (${body.codigo}, ${body.data}::timestamp, ${body.tempo}::time, ${body.pontuacao}, ${body.nro_anac}, ${body.nro_reg}, ${body.nro_tecnico})`
-    );
     const teste =
-      await prisma.$queryRaw`Insert into teste values (${body.codigo}, '${body.data}'::timestamp, '${body.tempo}'::time, ${body.pontuacao}, ${body.nro_anac}, ${body.nro_reg}, ${body.nro_tecnico})`;
+      await prisma.$queryRaw`Insert into teste values (${body.nro_anac}, ${body.nome}, ${body.pont_max})`;
   } catch (e) {
     throw new Error("Erro ao registrar teste. " + e);
   }
@@ -25,14 +22,10 @@ const Create = async (body) => {
 const Update = async (body, id) => {
   try {
     const teste = await prisma.$queryRaw`Update teste set 
-    codigo = ${parseInt(body.codigo)}, 
-    data = ${body.data}::timestamp,
-    tempo = ${body.tempo}::time, 
-    pontuacao = ${body.pontuacao}, 
-    nro_anac = ${body.nro_anac}, 
-    nro_reg = ${body.nro_reg}, 
-    nro_tecnico = ${body.nro_tecnico} 
-    where codigo = ${parseInt(id)}`;
+    nro_anac = ${parseInt(body.nro_anac)}, 
+    nome = '${body.nome}', 
+    pont_max = ${parseInt(body.pont_max)} 
+    where nro_anac = ${parseInt(id)}`;
   } catch (e) {
     throw new Error("Erro ao atualizar teste. " + e);
   }
@@ -40,7 +33,7 @@ const Update = async (body, id) => {
 
 const Delete = async (id) => {
   try {
-    await prisma.$queryRaw`Delete from teste where codigo = ${parseInt(id)}`;
+    await prisma.$queryRaw`Delete from teste where nro_anac = ${parseInt(id)}`;
   } catch (e) {
     throw new Error("Erro ao deletar teste. " + e);
   }

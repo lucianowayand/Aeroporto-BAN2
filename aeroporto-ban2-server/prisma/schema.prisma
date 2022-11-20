@@ -52,7 +52,7 @@ model modelo_has_tecnico {
 model testa {
   codigo      Int       @id
   data        DateTime
-  tempo       DateTime  @db.Time(6)
+  tempo       String
   pontuacao   Int
   nro_anac    Int
   num_reg     Int
