@@ -25,6 +25,8 @@ export default function Controlador() {
     }
 
     const CreateControlador = async () => {
+        console.log({nro_matricula: nro_matriculaCreate.current,
+            data_exame: data_exameCreate.current,})
         const res = await Create('controlador', {
             nro_matricula: nro_matriculaCreate.current,
             data_exame: data_exameCreate.current,
@@ -109,7 +111,7 @@ export default function Controlador() {
                     <h5>Número de Matrícula</h5>
                     <input
                         className="mt0-5 modal-textfield disabled-field"
-                        defaultValue={(selectedControlador ? selectedControlador.nro_matricula : "")}
+                        defaultValue={(selectedControlador ? selectedControlador.nro_matricula : 0)}
                         disabled
                     />
                 </div>
@@ -132,8 +134,9 @@ export default function Controlador() {
                             <h5>Número de Matricula</h5>
                             {matriculas.length !== 0 ?
                                 <select className="mt0-5 new-textfield" onChange={(event) => nro_matriculaCreate.current = (parseInt(event.target.value))}>
+                                    <option key={0} value={0}>{"Selecione .."}</option>
                                     {matriculas.map((element, i) => (
-                                        <option key={i} value={element.nro_matricula}>{element.nro_matricula}</option>
+                                        <option key={i+1} value={parseInt(element.nro_matricula)}>{element.nro_matricula}</option>
                                     ))}
                                 </select>
                                 : <input className="mt0-5 new-textfield  disabled-field" disabled onChange={(event) => data_exameCreate.current = event.target.value} />
