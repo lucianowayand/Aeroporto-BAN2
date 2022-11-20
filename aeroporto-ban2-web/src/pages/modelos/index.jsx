@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react"
 import Warning from "../../components/warning"
-import { CreateModelos, GetAllModelos } from "../../services/modelos"
+import { CreateModelos, DeleteModelos, GetAllModelos, UpdateModelos } from "../../services/modelos"
+import Modal from "../../components/modal"
 
 export default function Modelos() {
     const [modelos, setModelos] = useState([])
@@ -9,9 +10,16 @@ export default function Modelos() {
         error: false,
     })
 
-    const codigo = useRef("")
-    const capacidade = useRef(0)
-    const peso = useRef(0)
+    const codigoCreate = useRef("")
+    const capacidadeCreate = useRef(0)
+    const pesoCreate = useRef(0)
+
+    const codigoUpdate = useRef("")
+    const capacidadeUpdate = useRef(0)
+    const pesoUpdate = useRef(0)
+
+    const [modal, setModal] = useState(false)
+    const [selectedModelo, setSelectedModelo] = useState()
 
     const GetAll = async () => {
         const res = await GetAllModelos()
@@ -20,9 +28,9 @@ export default function Modelos() {
 
     const Create = async () => {
         const res = await CreateModelos({
-            codigo: codigo.current,
-            capacidade: capacidade.current,
-            peso: peso.current
+            codigo: codigoCreate.current,
+            capacidade: capacidadeCreate.current,
+            peso: pesoCreate.current
         })
         if (res.status === 200) {
             setMessage({
@@ -38,12 +46,87 @@ export default function Modelos() {
         }
     }
 
+    const Update = async () => {
+        let payload = {
+            codigo: codigoUpdate.current,
+            capacidade: capacidadeUpdate.current,
+            peso: pesoUpdate.current
+        }
+        const res = await UpdateModelos(selectedModelo.codigo, payload)
+        if (res.status === 200) {
+            setMessage({
+                text: "Modelo atualizado com sucesso!",
+                error: false
+            })
+            GetAll()
+        } else {
+            console.log(res)
+            setMessage({
+                text: res.data.message,
+                error: true
+            })
+        }
+        setModal(false)
+    }
+
+    const Delete = async () => {
+        const res = await DeleteModelos(selectedModelo.codigo)
+        if (res.status === 200) {
+            setMessage({
+                text: "Modelo deletado com sucesso!",
+                error: false
+            })
+            GetAll()
+        } else {
+            console.log(res)
+            setMessage({
+                text: res.data.message,
+                error: true
+            })
+        }
+        setModal(false)
+    }
+
+    const SelectModelo = (value) => {
+        setSelectedModelo(value)
+        codigoUpdate.current = value.codigo
+        capacidadeUpdate.current = value.capacidade
+        pesoUpdate.current = value.peso
+        setModal(true)
+    }
+
     useEffect(() => {
         GetAll()
     }, [])
 
     return (
         <div>
+            <Modal modal={modal} closeModal={() => setModal(false)} updateFunction={Update} deleteFunction={Delete}>
+                <div className="pt2 pr1">
+                    <h5>Código</h5>
+                    <input
+                        className="mt0-5 modal-textfield"
+                        onChange={(event) => codigoUpdate.current = event.target.value}
+                        defaultValue={(selectedModelo ? selectedModelo.codigo : "")}
+                    />
+                </div>
+                <div className="pt2 pr1">
+                    <h5>Capacidade</h5>
+                    <input
+                        className="mt0-5 modal-textfield"
+                        onChange={(event) => capacidadeUpdate.current = event.target.value}
+                        defaultValue={(selectedModelo ? selectedModelo.capacidade : "")}
+                    />
+                </div>
+                <div className="pt2 pr1">
+                    <h5>Peso</h5>
+                    <input
+                        className="mt0-5 modal-textfield"
+                        onChange={(event) => pesoUpdate.current = event.target.value}
+                        defaultValue={(selectedModelo ? selectedModelo.peso : "")}
+                    />
+                </div>
+            </Modal>
             <h1>Modelos</h1>
             <Warning message={message} />
             <div className="mt2 border">
@@ -52,15 +135,15 @@ export default function Modelos() {
                     <div className="flex-row">
                         <div>
                             <h5>Código</h5>
-                            <input className="mt0-5" onChange={(event) => codigo.current = event.target.value} />
+                            <input className="mt0-5" onChange={(event) => codigoCreate.current = event.target.value} />
                         </div>
                         <div className="ml1">
                             <h5>Capacidade</h5>
-                            <input className="mt0-5" onChange={(event) => capacidade.current = parseInt(event.target.value)} />
+                            <input className="mt0-5" onChange={(event) => capacidadeCreate.current = parseInt(event.target.value)} />
                         </div>
                         <div className="ml1">
                             <h5>Peso</h5>
-                            <input className="mt0-5" onChange={(event) => peso.current = parseInt(event.target.value)} />
+                            <input className="mt0-5" onChange={(event) => pesoCreate.current = parseInt(event.target.value)} />
                         </div>
                     </div>
                     <div className="pl2">
@@ -79,14 +162,14 @@ export default function Modelos() {
                     </thead>
                     <tbody>
                         {modelos.length !== 0  ? modelos.map((value, i) => (
-                            <tr key={i} onClick={() => console.log(value)} className="table-row pointer">
+                            <tr key={i} onClick={() => SelectModelo(value)} className="table-row pointer">
                                 <td>{value.codigo}</td>
                                 <td>{value.capacidade}</td>
                                 <td>{value.peso}</td>
                             </tr>
                         )) :
                             <tr>
-                                <p className="p1">Não existem aviões cadastrados :(</p>
+                                <p className="p1">Não existem modelos cadastrados :(</p>
                             </tr>
                         }
                     </tbody>
