@@ -76,6 +76,10 @@ button:active {
 	margin-top: 1em;
 }
 
+.pl0-5{
+	padding-left: 0.5em;
+}
+
 .p1 {
 	padding: 1em;
 }
@@ -86,6 +90,10 @@ button:active {
 
 .pt1 {
 	padding-top: 1em;
+}
+
+.pl1 {
+	padding-left: 1em;
 }
 
 .pr1 {
@@ -114,6 +122,18 @@ button:active {
 
 .full-height {
 	height: 100vh;
+}
+
+.height-100 {
+	height: 100%;
+}
+
+.full-width {
+	width: 100vw;
+}
+
+.position-absolute {
+	position: absolute;
 }
 
 .flex-row {
@@ -153,6 +173,7 @@ button:active {
 	display: flex;
     flex-direction: row;
     justify-content: space-between;
+	align-items: center;
 }
 
 .border {
@@ -206,4 +227,54 @@ button:active {
 
 .table-row:hover{
 	background-color: #eeeeee;
+}
+
+.outlined-button{
+	background-color: white;
+	color: black;
+	border: #000 2px solid;
+}
+
+.outlined-button:hover{
+	background-color: white;
+}
+
+.modal-background {
+	background-color: rgba(0, 0, 0, 0.274);
+	width: 100vw;
+	height: 100vh;
+	position: absolute;
+	top: 0;
+	left: 0;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.modal-card {
+	background-color: rgb(255, 255, 255);
+	translate: 0 -5em;
+	width: 40vw;
+	height: 40vh;
+	display: block;
+}
+
+.modal-textfield {
+	width: 100%;
+	height: 2em;
+	border-radius: 5px;
+	padding-left: 10px;
+	border: #000 2px solid;
+}
+
+.new-textfield{
+	height: 2em;
+	border-radius: 5px;
+	padding-left: 10px;
+	border: #000 2px solid;
+}
+
+.disabled-field {
+	border: #00000056 2px solid;
+	color: #00000056;
 }

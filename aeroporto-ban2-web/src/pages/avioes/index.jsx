@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react"
+import Modal from "../../components/modal"
 import Warning from "../../components/warning"
-import { CreateAvioes, GetAllAvioes } from "../../services/avioes"
+import { CreateAvioes, DeleteAvioes, GetAllAvioes, UpdateAvioes } from "../../services/avioes"
 
 export default function Avioes() {
     const [avioes, setAvioes] = useState([])
@@ -9,19 +10,23 @@ export default function Avioes() {
         error: false,
     })
 
-    const codigo_modelo = useRef("")
-    const num_reg = useRef(0)
+    const codigo_modeloCreate = useRef("")
+    const num_regCreate = useRef(0)
+    const codigo_modeloUpdate = useRef("")
+    const num_regUpdate = useRef(0)
+
+    const [modal, setModal] = useState(false)
+    const [selectedAviao, setSelectedAviao] = useState()
 
     const GetAll = async () => {
         const res = await GetAllAvioes()
         setAvioes(res.data.avioes)
-        console.log(res.data.avioes)
     }
 
     const Create = async () => {
         const res = await CreateAvioes({
-            num_reg: num_reg.current,
-            codigo_modelo: codigo_modelo.current
+            num_reg: num_regCreate.current,
+            codigo_modelo: codigo_modeloCreate.current
         })
         if (res.status === 200) {
             setMessage({
@@ -37,12 +42,77 @@ export default function Avioes() {
         }
     }
 
+    const Update = async () => {
+        let payload = {
+            num_reg: num_regUpdate.current,
+            codigo_modelo: selectedAviao.codigo_modelo
+        }
+        const res = await UpdateAvioes(selectedAviao.num_reg, payload)
+        if (res.status === 200) {
+            setMessage({
+                text: "Avião atualizado com sucesso!",
+                error: false
+            })
+            GetAll()
+        } else {
+            console.log(res)
+            setMessage({
+                text: res.data.message,
+                error: true
+            })
+        }
+        setModal(false)
+    }
+
+    const Delete = async () => {
+        const res = await DeleteAvioes(selectedAviao.num_reg)
+        if (res.status === 200) {
+            setMessage({
+                text: "Avião deletado com sucesso!",
+                error: false
+            })
+            GetAll()
+        } else {
+            console.log(res)
+            setMessage({
+                text: res.data.message,
+                error: true
+            })
+        }
+        setModal(false)
+    }
+
+    const SelectAviao = (value) => {
+        setSelectedAviao(value)
+        codigo_modeloUpdate.current = value.codigo_modelo
+        num_regUpdate.current = value.num_reg
+        setModal(true)
+    }
+
     useEffect(() => {
         GetAll()
     }, [])
 
     return (
         <div>
+            <Modal modal={modal} closeModal={() => setModal(false)} updateFunction={Update} deleteFunction={Delete}>
+                <div className="pt2 pr1">
+                    <h5>Código</h5>
+                    <input
+                        className="mt0-5 modal-textfield disabled-field"
+                        defaultValue={(selectedAviao ? selectedAviao.codigo_modelo : "")}
+                        disabled
+                    />
+                </div>
+                <div className="pt2 pr1">
+                    <h5>Número de Registro</h5>
+                    <input
+                        className="mt0-5 modal-textfield"
+                        onChange={(event) => num_regUpdate.current = parseInt(event.target.value)}
+                        defaultValue={(selectedAviao ? selectedAviao.num_reg : "")}
+                    />
+                </div>
+            </Modal>
             <h1>Aviões</h1>
             <Warning message={message} />
             <div className="mt2 border">
@@ -51,11 +121,11 @@ export default function Avioes() {
                     <div className="flex-row">
                         <div>
                             <h5>Código</h5>
-                            <input className="mt0-5" onChange={(event) => codigo_modelo.current = event.target.value} />
+                            <input className="mt0-5 new-textfield" onChange={(event) => codigo_modeloCreate.current = event.target.value} />
                         </div>
                         <div className="ml1">
                             <h5>Número de Registro</h5>
-                            <input className="mt0-5" onChange={(event) => num_reg.current = parseInt(event.target.value)} />
+                            <input className="mt0-5 new-textfield" onChange={(event) => num_regCreate.current = parseInt(event.target.value)} />
                         </div>
                     </div>
                     <div className="pl2">
@@ -73,7 +143,7 @@ export default function Avioes() {
                     </thead>
                     <tbody>
                         {avioes.length !== 0 ? avioes.map((value, i) => (
-                            <tr key={i} onClick={() => console.log(value)} className="table-row pointer">
+                            <tr key={i} onClick={() => SelectAviao(value)} className="table-row pointer">
                                 <td>{value.codigo_modelo}</td>
                                 <td>{value.num_reg}</td>
                             </tr>
