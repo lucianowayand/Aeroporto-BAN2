@@ -23,6 +23,18 @@ th {
 	padding: 0.5em;
 }
 
+select {
+  background-color: transparent;
+  border: none;
+  padding: 0 1em 0 0;
+  margin: 0;
+  width: 100%;
+  font-family: inherit;
+  font-size: inherit;
+  cursor: inherit;
+  line-height: inherit;
+}
+
 button {
 	font-weight: bold;
 	color: white;
