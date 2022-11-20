@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react"
 import Warning from "../../components/warning"
+import { CreateAvioes, GetAllAvioes } from "../../services/avioes"
 
 export default function Avioes() {
     const [avioes, setAvioes] = useState([])
@@ -8,28 +9,32 @@ export default function Avioes() {
         error: false,
     })
 
-    const this_response = useRef()
-
-    const codigo_modelo = useRef(0)
+    const codigo_modelo = useRef("")
+    const num_reg = useRef(0)
 
     const GetAll = async () => {
-        const res = await fetch('http://localhost:5000/aviao', { method: "GET" })
-            .then((response) => response.json())
-            .then((data) => setAvioes(data.avioes));
+        const res = await GetAllAvioes()
+        setAvioes(res.data.avioes)
+        console.log(res.data.avioes)
     }
 
     const Create = async () => {
-        const res = await fetch('http://localhost:5000/aviao', {
-            method: 'POST',
-            body: JSON.stringify({
-                num_reg: 22,
-                codigo_modelo: "Teste"
-            }),
+        const res = await CreateAvioes({
+            num_reg: num_reg.current,
+            codigo_modelo: codigo_modelo.current
         })
-            .then((response) => response.json())
-            .then((data) => console.log(data))
-        
-        GetAll
+        if (res.status === 200) {
+            setMessage({
+                text: "Avião cadastrado com sucesso!",
+                error: false
+            })
+            GetAll()
+        } else {
+            setMessage({
+                text: res.data.message,
+                error: true
+            })
+        }
     }
 
     useEffect(() => {
@@ -46,11 +51,11 @@ export default function Avioes() {
                     <div className="flex-row">
                         <div>
                             <h5>Código</h5>
-                            <input className="mt0-5" onChange={(event) => console.log(event.target.value)} />
+                            <input className="mt0-5" onChange={(event) => codigo_modelo.current = event.target.value} />
                         </div>
                         <div className="ml1">
                             <h5>Número de Registro</h5>
-                            <input className="mt0-5" onChange={(event) => console.log(event.target.value)} />
+                            <input className="mt0-5" onChange={(event) => num_reg.current = parseInt(event.target.value)} />
                         </div>
                     </div>
                     <div className="pl2">
@@ -67,8 +72,8 @@ export default function Avioes() {
                         </tr>
                     </thead>
                     <tbody>
-                        {avioes != [] ? avioes.map((value, i) => (
-                            <tr key={i}>
+                        {avioes.length !== 0 ? avioes.map((value, i) => (
+                            <tr key={i} onClick={() => console.log(value)} className="table-row pointer">
                                 <td>{value.codigo_modelo}</td>
                                 <td>{value.num_reg}</td>
                             </tr>
