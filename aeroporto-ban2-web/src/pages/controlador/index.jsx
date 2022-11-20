@@ -145,7 +145,7 @@ export default function Controlador() {
                         </tr>
                     </thead>
                     <tbody>
-                        {controlador ? controlador.map((value, i) => (
+                        {controlador.length != 0 ? controlador.map((value, i) => (
                             <tr key={i} onClick={() => SelectControlador(value)} className="table-row pointer">
                                 <td>{value.nro_matricula}</td>
                                 <td>{(value.data_exame).slice(5,7)+'-'+(value.data_exame).slice(8,10)+'-'+(value.data_exame).slice(0,4)}</td>
