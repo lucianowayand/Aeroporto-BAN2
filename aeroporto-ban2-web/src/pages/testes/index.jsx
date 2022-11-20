@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import Modal from "../../components/modal";
 import Warning from "../../components/warning";
-import { Create, Delete, GetAll, Update } from "../../services/testes";
+import { Create, Delete, GetAll, Update } from "../../services/api";
 
 export default function Testes() {
   const [testes, setTestes] = useState([]);
