@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react"
+import { Create, Delete, GetAll, Update } from "../../services/api"
 import Warning from "../../components/warning"
-import { CreateModelos, DeleteModelos, GetAllModelos, UpdateModelos } from "../../services/modelos"
 import Modal from "../../components/modal"
 
 export default function Modelos() {
@@ -21,13 +21,13 @@ export default function Modelos() {
     const [modal, setModal] = useState(false)
     const [selectedModelo, setSelectedModelo] = useState()
 
-    const GetAll = async () => {
+    const GetAllModelos = async () => {
         const res = await GetAllModelos()
         setModelos(res.data.modelos)
     }
 
-    const Create = async () => {
-        const res = await CreateModelos({
+    const CreateModelo = async () => {
+        const res = await Create('modelo', {
             codigo: codigoCreate.current,
             capacidade: capacidadeCreate.current,
             peso: pesoCreate.current
@@ -37,7 +37,7 @@ export default function Modelos() {
                 text: "Modelo cadastrado com sucesso!",
                 error: false
             })
-            GetAll()
+            GetAllModelos()
         } else {
             setMessage({
                 text: res.data.message,
@@ -46,19 +46,19 @@ export default function Modelos() {
         }
     }
 
-    const Update = async () => {
+    const UpdateModelo = async () => {
         let payload = {
             codigo: codigoUpdate.current,
             capacidade: capacidadeUpdate.current,
             peso: pesoUpdate.current
         }
-        const res = await UpdateModelos(selectedModelo.codigo, payload)
+        const res = await Update('modelo', selectedModelo.codigo, payload)
         if (res.status === 200) {
             setMessage({
                 text: "Modelo atualizado com sucesso!",
                 error: false
             })
-            GetAll()
+            GetAllModelos()
         } else {
             console.log(res)
             setMessage({
@@ -69,14 +69,14 @@ export default function Modelos() {
         setModal(false)
     }
 
-    const Delete = async () => {
-        const res = await DeleteModelos(selectedModelo.codigo)
+    const DeleteModelos = async () => {
+        const res = await Delete('modelo', selectedModelo.codigo)
         if (res.status === 200) {
             setMessage({
                 text: "Modelo deletado com sucesso!",
                 error: false
             })
-            GetAll()
+            GetAllModelos()
         } else {
             console.log(res)
             setMessage({
@@ -96,12 +96,12 @@ export default function Modelos() {
     }
 
     useEffect(() => {
-        GetAll()
+        GetAllModelos()
     }, [])
 
     return (
         <div>
-            <Modal modal={modal} closeModal={() => setModal(false)} updateFunction={Update} deleteFunction={Delete}>
+            <Modal modal={modal} closeModal={() => setModal(false)} updateFunction={UpdateModelos} deleteFunction={DeleteModelos}>
                 <div className="pt2 pr1">
                     <h5>Código</h5>
                     <input
@@ -147,7 +147,7 @@ export default function Modelos() {
                         </div>
                     </div>
                     <div className="pl2">
-                        <button onClick={Create}>Enviar</button>
+                        <button onClick={CreateModelos}>Enviar</button>
                     </div>
                 </div>
             </div>
