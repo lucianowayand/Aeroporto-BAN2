@@ -95,6 +95,7 @@ export default function Controlador() {
     const GetAllEmpregados = async () => {
         const res = await GetAll('empregado')
         setMatriculas(res.data.empregados)
+        nro_matriculaCreate.current = res.data.empregados[0].nro_matricula
     }
 
     useEffect(() => {

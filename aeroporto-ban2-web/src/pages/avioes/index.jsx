@@ -24,10 +24,12 @@ export default function Avioes() {
     };
 
     const CreateAvioes = async () => {
-        const res = await Create("aviao", {
+        let payload = {
             num_reg: num_regCreate.current,
             codigo_modelo: codigo_modeloCreate.current,
-        });
+        }
+        const res = await Create("aviao", payload);
+        console.log(payload)
         if (res.status === 200) {
             setMessage({
                 text: "Avião cadastrado com sucesso!",
@@ -86,6 +88,8 @@ export default function Avioes() {
     const GetModelos = async () => {
         const res = await GetAll('modelo')
         setModelos(res.data.modelos)
+        console.log(res.data.modelos)
+        codigo_modeloCreate.current = res.data.modelos[0].codigo
     }
 
     const SelectAviao = (value) => {
