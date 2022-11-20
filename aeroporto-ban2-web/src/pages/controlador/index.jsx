@@ -91,8 +91,15 @@ export default function Controlador() {
         setModal(true)
     }
 
+    const [matriculas, setMatriculas] = useState([])
+    const GetAllEmpregados = async () => {
+        const res = await GetAll('empregado')
+        setMatriculas(res.data.empregados)
+    }
+
     useEffect(() => {
         GetAllControlador()
+        GetAllEmpregados()
     }, [])
 
     return (
@@ -111,7 +118,7 @@ export default function Controlador() {
                     <input
                         className="mt0-5 modal-textfield"
                         onChange={(event) => data_exameUpdate.current = event.target.value}
-                        defaultValue={(selectedControlador ? selectedControlador.data_exame.slice(0,10) : "")}
+                        defaultValue={(selectedControlador ? selectedControlador.data_exame.slice(0, 10) : "")}
                     />
                 </div>
             </Modal>
@@ -123,7 +130,14 @@ export default function Controlador() {
                     <div className="flex-row">
                         <div>
                             <h5>Número de Matricula</h5>
-                            <input className="mt0-5 new-textfield" onChange={(event) => nro_matriculaCreate.current = parseInt(event.target.value)} />
+                            {matriculas.length !== 0 ?
+                                <select className="mt0-5 new-textfield" onChange={(event) => nro_matriculaCreate(parseInt(event.target.value))}>
+                                    {matriculas.map((element, i) => (
+                                        <option key={i} value={element.nro_matricula}>{element.nro_matricula}</option>
+                                    ))}
+                                </select>
+                                : <input className="mt0-5 new-textfield  disabled-field" disabled onChange={(event) => data_exameCreate.current = event.target.value} />
+                            }
                         </div>
                         <div className="ml1">
                             <h5>Data de Exame</h5>
@@ -147,7 +161,7 @@ export default function Controlador() {
                         {controlador.length != 0 ? controlador.map((value, i) => (
                             <tr key={i} onClick={() => SelectControlador(value)} className="table-row pointer">
                                 <td>{value.nro_matricula}</td>
-                                <td>{(value.data_exame).slice(5,7)+'-'+(value.data_exame).slice(8,10)+'-'+(value.data_exame).slice(0,4)}</td>
+                                <td>{(value.data_exame).slice(5, 7) + '-' + (value.data_exame).slice(8, 10) + '-' + (value.data_exame).slice(0, 4)}</td>
                             </tr>
                         )) :
                             <tr>
