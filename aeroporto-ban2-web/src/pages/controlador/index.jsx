@@ -131,7 +131,7 @@ export default function Controlador() {
                         <div>
                             <h5>Número de Matricula</h5>
                             {matriculas.length !== 0 ?
-                                <select className="mt0-5 new-textfield" onChange={(event) => nro_matriculaCreate(parseInt(event.target.value))}>
+                                <select className="mt0-5 new-textfield" onChange={(event) => nro_matriculaCreate.current = (parseInt(event.target.value))}>
                                     {matriculas.map((element, i) => (
                                         <option key={i} value={element.nro_matricula}>{element.nro_matricula}</option>
                                     ))}
