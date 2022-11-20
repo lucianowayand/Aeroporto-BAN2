@@ -122,7 +122,7 @@ declare contTestes int;
 begin
    if old.tecnico and new.tecnico = false then
    	  select count(*) into contModelos from modelo_has_tecnico where new.nro_matricula=nro_matricula;
-   	  select count(*) into contTestes from testa where new.nro_tecnico=nro_matricula;
+   	  select count(*) into contTestes from testa where nro_tecnico=new.nro_matricula;
 	  if contModelos+contTestes>0 then
       	raise exception 'Empregado possui perícia ou testes e não pode perder propriedade de técnico';
 	  end if;	
