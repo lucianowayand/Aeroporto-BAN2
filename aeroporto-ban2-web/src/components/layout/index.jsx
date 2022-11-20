@@ -17,8 +17,8 @@ export default function Layout({ children }) {
                     </div>
                 </div>
                 <div className="pb2">
-                    <p>Luciano Abreu</p>
                     <p>Gabriel F. Junkes</p>
+                    <p>Luciano W. de Abreu</p>
                 </div>
 
             </div>
