@@ -6,6 +6,7 @@ const modeloRouter = require("./routes/modelo");
 const empregadoRouter = require("./routes/empregado");
 const controladorRouter = require("./routes/controladorAereo");
 const testeRouter = require("./routes/teste");
+const periciaRouter = require("./routes/modeloHasTecnico");
 
 const app = express();
 
@@ -21,6 +22,8 @@ app.use("/empregado", empregadoRouter);
 app.use("/controlador", controladorRouter);
 
 app.use("/teste", testeRouter);
+
+app.use("/pericia", periciaRouter);
 
 app.listen(5000, () =>
   console.log("REST API server ready at: http://localhost:5000")
