@@ -21,9 +21,8 @@ const Create = async (body) => {
 
 const Update = async (body, id) => {
   try {
-    const modelo = await prisma.$queryRaw`Update modelo set codigo = ${parseInt(
-      body.codigo
-    )}, 
+    const modelo = await prisma.$queryRaw`Update modelo set 
+    codigo = ${body.codigo}, 
     capacidade = ${parseInt(body.capacidade)}, 
     peso = ${parseInt(body.peso)} 
     where codigo = ${parseInt(id)}`;
@@ -34,7 +33,7 @@ const Update = async (body, id) => {
 
 const Delete = async (id) => {
   try {
-    await prisma.$queryRaw`Delete from modelo where codigo = ${parseInt(id)}`;
+    await prisma.$queryRaw`Delete from modelo where codigo = ${id}`;
   } catch (e) {
     throw new Error("Erro ao deletar modelo. " + e);
   }

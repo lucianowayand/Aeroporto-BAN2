@@ -31,7 +31,7 @@ const Update = async (body, id) => {
     const aviao = await prisma.$queryRaw`Update aviao set num_reg = ${parseInt(
       body.num_reg
     )}, 
-    codigo_modelo = ${parseInt(body.codigo_modelo)}
+    codigo_modelo = ${body.codigo_modelo}
     where num_reg = ${parseInt(id)}`;
   } catch (e) {
     throw new Error("Erro ao atualizar avião. " + e);

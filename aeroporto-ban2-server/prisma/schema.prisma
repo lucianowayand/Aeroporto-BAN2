@@ -9,7 +9,7 @@ datasource db {
 
 model aviao {
   num_reg       Int     @id
-  codigo_modelo Int
+  codigo_modelo String
   modelo        modelo  @relation(fields: [codigo_modelo], references: [codigo], map: "mecanico_cods_fkey")
   testa         testa[]
 }
@@ -33,7 +33,7 @@ model empregado {
 }
 
 model modelo {
-  codigo             Int                  @id
+  codigo             String               @id
   capacidade         Int
   peso               Int
   aviao              aviao[]
@@ -42,7 +42,7 @@ model modelo {
 
 model modelo_has_tecnico {
   nro_matricula Int
-  codigo_modelo Int
+  codigo_modelo String
   modelo        modelo    @relation(fields: [codigo_modelo], references: [codigo], map: "codigo_modelo_fkey")
   empregado     empregado @relation(fields: [nro_matricula], references: [nro_matricula], map: "controlador_matricula_fkey")
 
@@ -52,7 +52,7 @@ model modelo_has_tecnico {
 model testa {
   codigo      Int       @id
   data        DateTime
-  tempo       DateTime  @db.Time(6)
+  tempo       String
   pontuacao   Int
   nro_anac    Int
   num_reg     Int
