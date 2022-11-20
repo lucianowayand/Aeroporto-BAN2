@@ -71,7 +71,7 @@ export default function Avioes() {
                 text: "Avião deletado com sucesso!",
                 error: false
             })
-            GetAll()
+            GetAllAvioes()
         } else {
             console.log(res)
             setMessage({

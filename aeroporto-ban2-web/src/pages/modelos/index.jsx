@@ -22,7 +22,7 @@ export default function Modelos() {
     const [selectedModelo, setSelectedModelo] = useState()
 
     const GetAllModelos = async () => {
-        const res = await GetAllModelos('modelo')
+        const res = await GetAll('modelo')
         setModelos(res.data.modelos)
     }
 
@@ -135,15 +135,15 @@ export default function Modelos() {
                     <div className="flex-row">
                         <div>
                             <h5>Código</h5>
-                            <input className="mt0-5" onChange={(event) => codigoCreate.current = event.target.value} />
+                            <input className="mt0-5 new-textfield register-field" onChange={(event) => codigoCreate.current = event.target.value} />
                         </div>
                         <div className="ml1">
                             <h5>Capacidade</h5>
-                            <input className="mt0-5" onChange={(event) => capacidadeCreate.current = parseInt(event.target.value)} />
+                            <input className="mt0-5 new-textfield register-field" onChange={(event) => capacidadeCreate.current = parseInt(event.target.value)} />
                         </div>
                         <div className="ml1">
                             <h5>Peso</h5>
-                            <input className="mt0-5" onChange={(event) => pesoCreate.current = parseInt(event.target.value)} />
+                            <input className="mt0-5 new-textfield register-field" onChange={(event) => pesoCreate.current = parseInt(event.target.value)} />
                         </div>
                     </div>
                     <div className="pl2">
