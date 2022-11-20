@@ -155,7 +155,7 @@ export default function Testas() {
         <div className="flex-row-space-around">
           <div>
             <div className="pt2 pr1">
-              <h5>Matrícula</h5>
+              <h5>Código</h5>
               <input
                 className="mt0-5 modal-textfield"
                 defaultValue={selectedTesta ? selectedTesta.codigo : ""}
@@ -165,7 +165,7 @@ export default function Testas() {
               />
             </div>
             <div className="pt2 pr1">
-              <h5>Telefone</h5>
+              <h5>Tempo</h5>
               <input
                 className="mt0-5 modal-textfield"
                 defaultValue={selectedTesta ? selectedTesta.tempo : ""}
@@ -175,7 +175,7 @@ export default function Testas() {
               />
             </div>
             <div className="pt2 pr1">
-              <h5>Nr. Sindicato</h5>
+              <h5>Nr. Anac</h5>
               <input
                 className="mt0-5 modal-textfield"
                 defaultValue={selectedTesta ? selectedTesta.nro_anac : ""}
@@ -187,7 +187,7 @@ export default function Testas() {
           </div>
           <div>
             <div className="pt2 pr1">
-              <h5>Endereço</h5>
+              <h5>Data</h5>
               <input
                 className="mt0-5 modal-textfield"
                 defaultValue={selectedTesta ? selectedTesta.data : ""}
@@ -197,13 +197,24 @@ export default function Testas() {
               />
             </div>
             <div className="pt2 pr1">
-              <h5>Salário</h5>
+              <h5>Pontuação</h5>
               <input
                 className="mt0-5 modal-textfield"
                 defaultValue={selectedTesta ? selectedTesta.pontuacao : ""}
                 onChange={(event) =>
                   (pontuacaoUpdate.current = parseInt(event.target.value))
                 }
+              />
+            </div>
+            <div className="pt2 pr1">
+              <h5>Nr. Técnico</h5>
+              <input
+                className="mt0-5 modal-textfield disabled-field"
+                defaultValue={selectedTesta ? selectedTesta.nro_tecnico : ""}
+                onChange={(event) =>
+                  (pontuacaoUpdate.current = parseInt(event.target.value))
+                }
+                disabled
               />
             </div>
           </div>
