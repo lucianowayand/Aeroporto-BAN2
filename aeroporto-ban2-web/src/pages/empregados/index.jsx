@@ -143,27 +143,27 @@ export default function Empregados() {
                 <h3>Adicionar novo registro:</h3>
                 <div className="pt1 flex-row-space-between">
                     <div className="flex-row">
-                        <div>
+                        <div className="">
                             <h5>Matrícula</h5>
-                            <input className="mt0-5 new-textfield" onChange={(event) => nro_matriculaCreate.current = parseInt(event.target.value)} />
+                            <input className="mt0-5 new-textfield register-field" onChange={(event) => nro_matriculaCreate.current = parseInt(event.target.value)} />
                         </div>
                         <div className="ml1">
                             <h5>Endereço</h5>
-                            <input className="mt0-5 new-textfield" onChange={(event) => enderecoCreate.current = event.target.value} />
+                            <input className="mt0-5 new-textfield register-field" onChange={(event) => enderecoCreate.current = event.target.value} />
                         </div>
                         <div className="ml1">
                             <h5>Telefone</h5>
-                            <input className="mt0-5 new-textfield" onChange={(event) => telefoneCreate.current = event.target.value} />
+                            <input className="mt0-5 new-textfield register-field" onChange={(event) => telefoneCreate.current = event.target.value} />
                         </div>
                         <div className="ml1">
                             <h5>Salário</h5>
-                            <input className="mt0-5 new-textfield" onChange={(event) => salarioCreate.current = parseFloat(event.target.value)} />
+                            <input className="mt0-5 new-textfield register-field" onChange={(event) => salarioCreate.current = parseFloat(event.target.value)} />
                         </div>
                         <div className="ml1">
                             <h5>Nr. Sindicato</h5>
-                            <input className="mt0-5 new-textfield" onChange={(event) => nro_sindicatoCreate.current = parseInt(event.target.value)} />
+                            <input className="mt0-5 new-textfield register-field" onChange={(event) => nro_sindicatoCreate.current = parseInt(event.target.value)} />
                         </div>
-                        <div className="ml1 flex-column-center">
+                        <div className="ml1 flex-column-center border register-checkbox">
                             <input type="checkbox" name="tecnico" checked={tecnicoCreate} onClick={() => setTecnicoCreate(!tecnicoCreate)} />
                             <label for="tecnico" className="pl0-5">Técnico</label>
                         </div>
