@@ -22,7 +22,7 @@ export default function Modelos() {
     const [selectedModelo, setSelectedModelo] = useState()
 
     const GetAllModelos = async () => {
-        const res = await GetAllModelos('modelo')
+        const res = await GetAll('modelo')
         setModelos(res.data.modelos)
     }
 
