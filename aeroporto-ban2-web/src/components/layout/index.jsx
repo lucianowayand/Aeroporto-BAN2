@@ -15,6 +15,7 @@ export default function Layout({ children }) {
                         <a className="side-menu-link pointer pt1" onClick={() => navigate('/modelos')}>Modelos</a>
                         <a className="side-menu-link pointer pt1" onClick={() => navigate('/avioes')}>Aviões</a>
                         <a className="side-menu-link pointer pt1" onClick={() => navigate('/testes')}>Testes</a>
+                        <a className="side-menu-link pointer pt1" onClick={() => navigate('/pericia')}>Perícia</a>
                     </div>
                 </div>
                 <div className="pb2">

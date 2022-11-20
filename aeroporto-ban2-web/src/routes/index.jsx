@@ -8,6 +8,7 @@ import Home from "../pages/home";
 import Modelos from "../pages/modelos";
 import NotFound from "../pages/not_found";
 import Testes from "../pages/testes";
+import Pericia from "../pages/pericia";
 
 export default function Router() {
     return (
@@ -20,6 +21,7 @@ export default function Router() {
                     <Route path="/modelos" element={<Modelos />} />
                     <Route path="/testes" element={<Testes />} />
                     <Route path="/controlador" element={<Controlador />} />
+                    <Route path="/pericia" element={<Pericia />} />
                     <Route path="*" element={<NotFound />} />
                 </Routes>
             </Layout>
