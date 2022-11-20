@@ -27,7 +27,7 @@ const Create = async (body) => {
       e.code == "P2010" && e.meta.code == "23505"
     ) {
       // Exemplo de msg: 'db error: ERROR: Empregado não é técnico'
-      throw new Error("Registro já existe");
+      throw new Error("Registro já existe.");
     }
     throw new Error("Erro ao registrar avião. " + e);
   }
@@ -41,6 +41,13 @@ const Update = async (body, id) => {
     codigo_modelo = ${body.codigo_modelo}
     where num_reg = ${parseInt(id)}`;
   } catch (e) {
+    if (
+      e instanceof Prisma.PrismaClientKnownRequestError &&
+      e.code == "P2010" && e.meta.code == "23505"
+    ) {
+      // Exemplo de msg: 'db error: ERROR: Empregado não é técnico'
+      throw new Error("Registro já existe.");
+    }
     throw new Error("Erro ao atualizar avião. " + e);
   }
 };

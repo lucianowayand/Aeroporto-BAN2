@@ -49,7 +49,7 @@ const Update = async (body, id) => {
       e.code == "P2010" && e.meta.code == "23505"
     ) {
       // Exemplo de msg: 'db error: ERROR: Empregado não é técnico'
-      throw new Error("Registro já existe");
+      throw new Error("Registro já existe.");
     }
     throw new Error("Erro ao atualizar empregado. " + e);
   }
