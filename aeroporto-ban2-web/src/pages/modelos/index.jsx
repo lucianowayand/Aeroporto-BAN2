@@ -26,7 +26,7 @@ export default function Modelos() {
         })
         if (res.status === 200) {
             setMessage({
-                text: "Avião cadastrado com sucesso!",
+                text: "Modelo cadastrado com sucesso!",
                 error: false
             })
             GetAll()
