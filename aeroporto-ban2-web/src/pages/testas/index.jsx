@@ -170,7 +170,7 @@ export default function Testas() {
                 className="mt0-5 modal-textfield"
                 defaultValue={selectedTesta ? selectedTesta.tempo : ""}
                 onChange={(event) =>
-                  (tempoUpdate.current = parseInt(event.target.value))
+                  (tempoUpdate.current = event.target.value)
                 }
               />
             </div>
@@ -190,9 +190,13 @@ export default function Testas() {
               <h5>Data</h5>
               <input
                 className="mt0-5 modal-textfield"
-                defaultValue={selectedTesta ? selectedTesta.data : ""}
+                defaultValue={selectedTesta ? selectedTesta.data.slice(0, 4) +
+                  "-" +
+                  selectedTesta.data.slice(5, 7) +
+                  "-" +
+                  selectedTesta.data.slice(8, 10) : ""}
                 onChange={(event) =>
-                  (dataUpdate.current = parseInt(event.target.value))
+                  (dataUpdate.current = event.target.value)
                 }
               />
             </div>
