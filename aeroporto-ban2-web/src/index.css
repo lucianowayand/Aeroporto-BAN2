@@ -283,7 +283,7 @@ button:active {
 	background-color: rgb(255, 255, 255);
 	translate: 0 -5em;
 	width: 40vw;
-	height: 40vh;
+	height: 60vh;
 	display: block;
 }
 
@@ -313,4 +313,8 @@ button:active {
 .disabled-field {
 	border: #00000056 2px solid;
 	color: #00000056;
+	-webkit-user-select: none; /* Safari */
+	-moz-user-select: none; /* Firefox */
+	-ms-user-select: none; /* IE10+/Edge */
+	user-select: none; /* Standard */
 }
